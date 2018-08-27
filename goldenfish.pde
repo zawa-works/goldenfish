@@ -1,37 +1,35 @@
 import org.gicentre.handy.*;
 
-PImage img;
 HandyRenderer h;
-Fish fish; 
+PolkaDot pd = new PolkaDot();
+Fish []fish = new Fish[4]; 
 
 void setup() {
-  size(100, 100);
-  background(0);
+  size(360, 640);
 
   h = new HandyRenderer(this);
-  fish = new Fish(width/2, height/2);
+
+  pd.setup();
+
+  for (int i = 0; i<fish.length; i++) {
+    fish[i] = new Fish(random(30, width-30), 100+150*(i), HALF_PI);
+    fish[i].setTailRotate(random(radians(-20), radians(20)));
+  }
+
   smooth();
 }
 
 void draw() {
-  img = createImage(width, height, ARGB);
-  background(0);
+  //
+  //pd.monochrome();
 
-  fish.draw();
+  //set color
+  color c = color(0);
+  pd.colorful(c);
 
-  for (int y = 0; y < height; y++) {
-    for (int x = 0; x < width; x++) {
-      color c = get(x, y);
 
-      if (c < #000010)continue;
-      img.set(x, y, c);
-    }
-  }
+  for (int i = 0; i < fish.length; i++)  fish[i].draw();
 
-  img.save("fish/fish_"+nf(frameCount, 3)+".png");
-
-  if (frameCount < 160)return;
+  save("fish5.png");
   noLoop();
-
-  println("save");
 }

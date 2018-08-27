@@ -1,20 +1,13 @@
 class Fish {
   float posX, posY, fishRotate;
   float tailRotate = -20;
-  float addTailRotate = 0.5;
 
-  Fish(float x, float y) {
+  Fish(float x, float y, float rad) {
     posX = x;
     posY = y;
-    fishRotate = 0;
+    fishRotate = rad;
   }
 
-  void setPosition(float x, float y) {
-    if (posX == x && posY == y)return;
-    fishRotate = atan2(y-posY, x-posX);
-    posX = x;
-    posY = y;
-  }
 
   void draw() {
     pushMatrix();
@@ -32,6 +25,12 @@ class Fish {
     head();
 
     popMatrix();
+  }
+
+  void setTailRotate(float rad) {
+    if (rad > radians(20))rad = radians(20);
+    if (rad < radians(-20))rad = radians(-20);
+    tailRotate = rad;
   }
 
   void body(float posX, float posY) {
@@ -120,10 +119,6 @@ class Fish {
       float y = 50*sin(rad);
       h.rect(x, y, -100, 10);
     }
-
-    tailRotate += addTailRotate;
-
-    if (abs(tailRotate) > 20)addTailRotate = -addTailRotate;
 
     popMatrix();
   }
