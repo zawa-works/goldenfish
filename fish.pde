@@ -1,17 +1,17 @@
 class Fish {
-  float posX, posY, angle;
+  float posX, posY, fishRotate;
   float tailRotate = -20;
   float addTailRotate = 0.5;
 
   Fish(float x, float y) {
     posX = x;
     posY = y;
-    angle = 0;
+    fishRotate = 0;
   }
 
   void setPosition(float x, float y) {
     if (posX == x && posY == y)return;
-    angle = atan2(y-posY, x-posX);
+    fishRotate = atan2(y-posY, x-posX);
     posX = x;
     posY = y;
   }
@@ -21,7 +21,7 @@ class Fish {
     translate(posX, posY);
     scale(0.1);
 
-    rotate(angle);
+    rotate(fishRotate);
 
     leftFin();
     rightFin();
@@ -38,16 +38,18 @@ class Fish {
     pushMatrix();
     translate(posX, posY);
     rectMode(CORNERS);
+
     noStroke();
     fill(#FF6E00);
 
     for (int i = 0; i <= 180; i+=5) {
-      float angle = radians(i);
+      float rad = radians(i);
       h.rect(
-        100*cos(angle), 70*sin(angle), 
-        100*cos(-angle) + 20, 70*sin(-angle)
+        100*cos(rad), 70*sin(rad), 
+        100*cos(-rad) + 20, 70*sin(-rad)
         );
     }
+
     popMatrix();
   }
 
@@ -57,6 +59,7 @@ class Fish {
 
     stroke(255, 200);
     fill(#FF6E00);
+
     for (int i = -5; i <= 5; i++) {
       float sizeX = map(abs(i), 0, 10, -200, -20);
       h.rect(-sizeX/2, i*2, sizeX, 2);
@@ -73,10 +76,10 @@ class Fish {
     fill(#FF6E00, 100);
 
     for (int i = 45; i < 90; i += 5) {
-      float angle = -radians(i);
-      float x = 100*cos(angle)-50;
-      float y = 50*sin(angle)-50*sin(PI/4);
-      h.rect(x, y, -100-(i-45)+random(0, 5), -10-random(0, 10));
+      float rad = -radians(i);
+      float x = 100*cos(rad)-50;
+      float y = 50*sin(rad)-50*sin(PI/4);
+      h.rect(x, y, -100 - (i - 45), -10);
     }
 
     popMatrix();
@@ -92,10 +95,10 @@ class Fish {
     fill(#FF6E00, 100);
 
     for (int i = 45; i < 90; i += 5) {
-      float angle = radians(i);
-      float x = 100*cos(angle)-50;
-      float y = 50*sin(angle)-50*sin(PI/4);
-      h.rect(x, y, -100-(i-45)+random(0, 5), 10+random(0, 10));
+      float rad = radians(i);
+      float x = 100*cos(rad)-50;
+      float y = 50*sin(rad)-50*sin(PI/4);
+      h.rect(x, y, -100 - (i - 45), 10);
     }
 
     popMatrix();
@@ -112,9 +115,9 @@ class Fish {
     fill(#FF6E00, 150);
 
     for (int i = -90; i < 90; i += 5) {
-      float angle = radians(i);
-      float x = 100*cos(angle)-100;
-      float y = 50*sin(angle);
+      float rad = radians(i);
+      float x = 100*cos(rad) - 100;
+      float y = 50*sin(rad);
       h.rect(x, y, -100, 10);
     }
 
